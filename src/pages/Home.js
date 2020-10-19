@@ -1,38 +1,40 @@
 import React, {useState} from 'react';
-import {View, Text, TextInput, Button} from 'react-native';
+import {View, Text, Button, StyleSheet} from 'react-native';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
+import TodoComponent from '../components/TodoComponent';
 
 import {addTodo} from '../store/actions/todoActions';
 
 const Home = (props) => {
-    const [input, setInput] = useState('');
     return (
-        <View style={{alignItems: 'center'}}>
+        <View style={styles.mainContainer}>
             <View>
-                <Text>Todos</Text>
+                <Text style={styles.title}>Todos</Text>
             </View>
-            <View style={{flexDirection: 'row', margin: 'auto'}}>
-                <TextInput
-                    style={{borderWidth: 1}}
-                    onChangeText={(input) => {
-                        setInput(input);
+
+            <View style={{maxHeight: 200}}>
+                <FlatList
+                    data={props.todos}
+                    keyExtractor={(item) => item.key.toString()}
+                    renderItem={({item}) => {
+                        return (
+                            <TodoComponent
+                                navigation={props.navigation}
+                                todo={item}
+                            />
+                        );
                     }}
-                    placeholder="Adicionar novo Todo"></TextInput>
-                <Button
-                    title="Adiciona"
-                    onPress={() => {
-                        const todo = {
-                            title: input,
-                            date: new Date().toISOString(),
-                        };
-                        props.add(todo);
-                        console.log(props.todos);
-                    }}></Button>
+                />
             </View>
             <View>
-                <Text>{input}</Text>
+                <Button
+                    title="New Todo"
+                    onPress={() => {
+                        props.navigation.navigate('NewTodo');
+                    }}
+                />
             </View>
-            <View></View>
         </View>
     );
 };
@@ -47,4 +49,17 @@ const mapDispatchToProps = (dispatch) => {
         add: (todo) => dispatch(addTodo(todo)),
     };
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+const styles = StyleSheet.create({
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold',
+    },
+    mainContainer: {
+        padding: 20,
+        justifyContent: 'center',
+    },
+    flatListComponent: {},
+});
