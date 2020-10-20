@@ -6,6 +6,8 @@ export default function TodoDetails({route: {params}}) {
     return (
         <View>
             <Text>{todo.title}</Text>
+            <Text>{todo.description}</Text>
+            <Text>{todo.createdAt}</Text>
         </View>
     );
 }

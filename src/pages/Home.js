@@ -1,6 +1,12 @@
-import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import React from 'react';
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    StyleSheet,
+    Dimensions,
+} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import TodoComponent from '../components/TodoComponent';
 
@@ -13,7 +19,7 @@ const Home = (props) => {
                 <Text style={styles.title}>Todos</Text>
             </View>
 
-            <View style={{maxHeight: 200}}>
+            <View style={styles.flatListComponent}>
                 <FlatList
                     data={props.todos}
                     keyExtractor={(item) => item.key.toString()}
@@ -28,12 +34,13 @@ const Home = (props) => {
                 />
             </View>
             <View>
-                <Button
-                    title="New Todo"
+                <TouchableOpacity
+                    style={styles.button}
                     onPress={() => {
                         props.navigation.navigate('NewTodo');
-                    }}
-                />
+                    }}>
+                    <Text style={styles.buttonText}>New Todo</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -61,5 +68,18 @@ const styles = StyleSheet.create({
         padding: 20,
         justifyContent: 'center',
     },
-    flatListComponent: {},
+    flatListComponent: {
+        height: Dimensions.get('window').height - 175,
+    },
+    button: {
+        height: 40,
+        backgroundColor: 'indigo',
+    },
+    buttonText: {
+        margin: 5,
+        padding: 5,
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: 'white',
+    },
 });

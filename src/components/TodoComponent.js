@@ -12,7 +12,8 @@ export default function TodoComponent({todo, navigation}) {
             }}>
             <View style={styles.todoItem}>
                 <View>
-                    <Text>{todo.title}</Text>
+                    <Text style={styles.todoItemTitle}>{todo.title}</Text>
+                    <Text>{todo.description}</Text>
                 </View>
                 <View>
                     <Icon name="chevron-down" size={24} />
@@ -25,12 +26,15 @@ export default function TodoComponent({todo, navigation}) {
 const styles = StyleSheet.create({
     todoItem: {
         flexDirection: 'row',
-        marginBottom: 20,
-        marginTop: 20,
         padding: 10,
         backgroundColor: 'lightgrey',
         elevation: 5,
         borderRadius: 10,
         justifyContent: 'space-between',
+        alignItems: 'center',
+        margin: 10,
+    },
+    todoItemTitle: {
+        fontSize: 20,
     },
 });
