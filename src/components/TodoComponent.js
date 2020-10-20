@@ -10,8 +10,8 @@ export default function TodoComponent({todo, navigation}) {
                     todo,
                 });
             }}>
-            <View style={styles.todoItem}>
-                <View>
+            <View style={stylesWithProps(todo).todoItem}>
+                <View style={styles.textArea}>
                     <Text style={styles.todoItemTitle}>{todo.title}</Text>
                     <Text>{todo.description}</Text>
                 </View>
@@ -23,18 +23,29 @@ export default function TodoComponent({todo, navigation}) {
     );
 }
 
+const stylesWithProps = (todo) =>
+    StyleSheet.create({
+        todoItem: {
+            flexDirection: 'row',
+            padding: 20,
+            marginTop: 10,
+            marginBottom: 10,
+            elevation: 5,
+            borderRadius: 10,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            backgroundColor: todo.done
+                ? 'rgba(0, 255, 0, 0.4)'
+                : 'rgba(255, 0, 0, 0.4)',
+        },
+    });
+
 const styles = StyleSheet.create({
-    todoItem: {
-        flexDirection: 'row',
-        padding: 10,
-        backgroundColor: 'lightgrey',
-        elevation: 5,
-        borderRadius: 10,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        margin: 10,
+    textArea: {
+        maxWidth: '90%',
     },
     todoItemTitle: {
         fontSize: 20,
+        fontWeight: 'bold',
     },
 });
